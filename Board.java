@@ -32,9 +32,10 @@ public class Board	{
 		this.height = height;
 		grid = new boolean[width][height];
 		committed = true;
+		maxHeight = 0;
 		
-		widths = new int[width];
-		heights = new int[height];
+		widths = new int[height];
+		heights = new int[width];
 		// YOUR CODE HERE
 	}
 	
@@ -60,20 +61,6 @@ public class Board	{
 	 For an empty board this is 0.
 	*/
 	public int getMaxHeight() {	
-		
-//		maxHeight = 0;
-//		
-//		for (int i = 0; i < width; i++) {
-//			int currentHeight = 0;
-//			for (int z = 0; z < height; z++){
-//				if (grid[i][z] == true){
-//					currentHeight++;
-//				}
-//			}
-//			if (currentHeight > maxHeight) {
-//				maxHeight = currentHeight;
-//			}
-//		}
 		
 		return maxHeight; // YOUR CODE HERE
 	}
@@ -154,8 +141,7 @@ public class Board	{
 	*/
 	public int place(Piece piece, int x, int y) {
 		// flag !committed problem
-		if (!committed) throw new RuntimeException("place commit problem");	
-		int result = PLACE_OK;
+//		if (!committed) throw new RuntimeException("place commit problem");	
 		
 		// YOUR CODE HERE
 		// find point that piece fills
@@ -204,27 +190,15 @@ public class Board	{
 			}
 		}
 		
-				//		// Check whole grid if row is filled
-				//		boolean filled = true;
-				//		//loop through rows
-				//		for (int r = 0; r < height; r++){
-				//			//loop through columns
-				//			for (int c = 0; c < width; c++) {
-				//				if (grid[c][r] == false) {
-				//					filled = false;
-				//				}
-				//			}
-				//			if (filled == true) {
-				//				return PLACE_ROW_FILLED;
-				//			}
-				//			filled = true;
-				//		}
 		
-		// Update widths, heights, maxHeight
+		// Check whole grid if row is filled
 		
+		for (int r = 0; r < height; r++) {
+			if (widths[r] == width) {
+				return PLACE_ROW_FILLED;
+			}
+		}
 		
-		
-
 		return PLACE_OK;
 	}
 	
@@ -236,6 +210,22 @@ public class Board	{
 	public int clearRows() {
 		int rowsCleared = 0;
 		// YOUR CODE HERE
+		
+		for (int row = 0; row < height; row++) {
+			if (widths[row] == width) {
+				for (int i = row; i < maxHeight; i++) {
+					widths[i] = widths[i+1];
+					for (int x = 0; x < width; x++){
+						grid[x][i] = grid[x][i+1]; 
+						heights[x] -= 1;
+					}
+					maxHeight -= 1;
+				}
+				row -= 1;
+			}
+		}
+		
+		// set all widths above maxheight to 0
 		
 		// Update widths, heights, maxHeight
 		sanityCheck();
