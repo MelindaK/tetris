@@ -86,7 +86,16 @@ public class Board	{
 	 to compute this fast -- O(skirt length).
 	*/
 	public int dropHeight(Piece piece, int x) {
-		return 0; // YOUR CODE HERE
+		
+		int yOrigin = 0;
+		
+		for (int i = 0; i < piece.getWidth(); i++){
+			if ((heights[i + x] - piece.getSkirt()[i + x]) > yOrigin) {
+				yOrigin = heights[i + x] - piece.getSkirt()[i + x];
+			};
+		}
+		
+		return yOrigin;
 	}
 	
 	
