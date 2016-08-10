@@ -25,8 +25,6 @@ public class BoardTest {
 		
 		s = new Piece(Piece.S1_STR);
 		sRotated = s.computeNextRotation();
-		
-//		b.place(pyr1, 0, 0);
 	}
 	
 	// Check the basic width/height/max after the one placement
@@ -34,29 +32,57 @@ public class BoardTest {
 	public void testSample1() {
 		assertEquals(0, b.getMaxHeight());
 		
-//		assertEquals(1, b.getColumnHeight(0));
-//		assertEquals(2, b.getColumnHeight(1));
-//		assertEquals(2, b.getMaxHeight());
-//		assertEquals(3, b.getRowWidth(0));
-//		assertEquals(1, b.getRowWidth(1));
-//		assertEquals(0, b.getRowWidth(2));
+		int result = b.place(pyr1, 0, 0);
+		
+		assertEquals(2, b.getMaxHeight());
+		assertEquals(1, b.getColumnHeight(0));
+		assertEquals(2, b.getColumnHeight(1));
+		assertEquals(1, b.getColumnHeight(2));
+		assertEquals(3, b.getRowWidth(0));
+		assertEquals(1, b.getRowWidth(1));
+		assertEquals(0, b.getRowWidth(2));
+		
+		assertEquals(true, b.getGrid(0,0));
+		assertEquals(true, b.getGrid(1,0));
+		assertEquals(true, b.getGrid(2,0));
+		assertEquals(true, b.getGrid(1,1));
+		assertEquals(false, b.getGrid(0,1));
+		
+		assertEquals(1, result);
+		b.clearRows();
+		
+		assertEquals(false, b.getGrid(0,0));
+		assertEquals(true, b.getGrid(1,0));
+		assertEquals(false, b.getGrid(2,0));
+		
+		assertEquals(1, b.getMaxHeight());
+		assertEquals(1, b.getRowWidth(0));
+		assertEquals(0, b.getColumnHeight(0));
+		assertEquals(1, b.getColumnHeight(1));
+		assertEquals(0, b.getColumnHeight(2));
 	}
 	
 	// Place sRotated into the board, then check some measures
 	@Test
 	public void testSample2() {
+		b.place(pyr1, 0, 0);
+		
 //		b.commit();
-//		int result = b.place(sRotated, 1, 1);
-//		assertEquals(Board.PLACE_OK, result);
-//		assertEquals(1, b.getColumnHeight(0));
-//		assertEquals(4, b.getColumnHeight(1));
-//		assertEquals(3, b.getColumnHeight(2));
-//		assertEquals(4, b.getMaxHeight());
+		
+		int result = b.place(sRotated, 1, 1);
+		
+		assertEquals(Board.PLACE_OK, result);
+		assertEquals(1, b.getColumnHeight(0));
+		assertEquals(4, b.getColumnHeight(1));
+		assertEquals(3, b.getColumnHeight(2));
+		assertEquals(4, b.getMaxHeight());
 	}
 	
 	// Make  more tests, by putting together longer series of 
 	// place, clearRows, undo, place ... checking a few col/row/max
 	// numbers that the board looks right after the operations.
 	
+	// Test clearRows
 	
+	//
 }

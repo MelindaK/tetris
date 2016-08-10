@@ -96,8 +96,7 @@ public class Board	{
 	 The height is 0 if the column contains no blocks.
 	*/
 	public int getColumnHeight(int x) {
-		
-		return heights[x]; // YOUR CODE HERE
+		return heights[x];
 	}
 	
 	
@@ -106,7 +105,7 @@ public class Board	{
 	 the given row.
 	*/
 	public int getRowWidth(int y) {
-		 return widths[y]; // YOUR CODE HERE
+		 return widths[y];
 	}
 	
 	
@@ -116,7 +115,11 @@ public class Board	{
 	 always return true.
 	*/
 	public boolean getGrid(int x, int y) {
-		return false; // YOUR CODE HERE
+		if (x >= width || x < 0 || y >= height || y < 0 ) {
+			return true;
+		}
+
+		return grid[x][y];
 	}
 	
 	
@@ -180,19 +183,19 @@ public class Board	{
 			widths[currentPoints[i].y] += 1;
 			
 			//Update Heights
-			if (currentPoints[i].y > heights[currentPoints[i].x]) {
-				heights[currentPoints[i].x] = currentPoints[i].y;
+			if (currentPoints[i].y >= heights[currentPoints[i].x]) {
+				heights[currentPoints[i].x] = currentPoints[i].y +1;
 			}
 			
 			//Update Max Height
-			if (currentPoints[i].y > maxHeight) {
-				maxHeight = currentPoints[i].y;
+			if (currentPoints[i].y >= maxHeight) {
+				maxHeight = currentPoints[i].y + 1;
 			}
 		}
 		
 		
 		// Check whole grid if row is filled
-		
+		// change r=0 to y placement
 		for (int r = 0; r < height; r++) {
 			if (widths[r] == width) {
 				return PLACE_ROW_FILLED;
