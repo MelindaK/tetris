@@ -251,17 +251,24 @@ public class Board	{
 
 		for (int row = 0; row < height; row++) {
 			if (widths[row] == width) {
+				rowsCleared++;
 				for (int i = row; i < maxHeight; i++) {
-					widths[i] = widths[i+1];
+					if (i == (height - 1)) widths[i] = 0;
+					else widths[i] = widths[i+1];
+					
 					for (int x = 0; x < width; x++){
-						grid[x][i] = grid[x][i+1];
-						heights[x] -= 1;
+						if (i == (height - 1)) grid[x][i] = false;
+						else grid[x][i] = grid[x][i+1];
 					}
-					maxHeight -= 1;
 				}
 				row -= 1;
 			}
 		}
+		
+		for (int i = 0; i < width; i++) {
+			heights[i] -= rowsCleared;
+		}
+		maxHeight -= rowsCleared;
 
 		// Update widths, heights, maxHeight
 		sanityCheck();
